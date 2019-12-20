@@ -1,1 +1,5 @@
-<p>dashboard works!</p>
+<div>
+    <a mat-button [routerLink]="'/dashboard/users-list'" class="dash-buttons"> Users-List </a>
+    <a mat-button [routerLink]="'/dashboard/games-list'" class="dash-buttons"> Games-List </a>    
+</div>
+<router-outlet></router-outlet>
