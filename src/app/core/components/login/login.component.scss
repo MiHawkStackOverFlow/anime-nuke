@@ -1,0 +1,21 @@
+.login-main {
+    margin-top: 10%;
+}
+
+mat-card {
+    min-width: 25%;
+}
+
+// ipad and mobile css
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    mat-card {
+        min-width: 40%;
+    }
+}
+
+@media (max-width: 600px) {
+    mat-card {
+      min-width: 75%;
+    }
+}

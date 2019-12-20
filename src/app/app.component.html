@@ -1,30 +1,25 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>Games Store</span>
-    <span class="fill-space"></span>
+<section>
+  <app-top-nav *ngIf="!isLoggedIn"></app-top-nav>
 
-    <button mat-button class="align-right">About</button>
-    <button mat-button>Contact</button>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <mat-icon>dialpad</mat-icon>
-        <span>Redial</span>
-      </button>
-      <button mat-menu-item disabled>
-        <mat-icon>voicemail</mat-icon>
-        <span>Check voicemail</span>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>notifications_off</mat-icon>
-        <span>Disable alerts</span>
-      </button>
-    </mat-menu>
+  <section *ngIf="!isLoggedIn">
+    <mat-drawer-container class="example-container" autosize style="height: 90vh;">
+      <mat-drawer #drawer class="example-sidenav" mode="side" style="width: 20%;">
+        <h1 style="margin-left: 10px;">SimpleCRM</h1>
+        <span class="menu-spacer"></span>
+        <div>
+          <a mat-button [routerLink]="'/dashboard'"> Dashboard </a>
+          <a mat-button [routerLink]="'/accounts'"> Accounts </a>    
+        </div>
+      </mat-drawer>
     
-  </mat-toolbar-row>
-</mat-toolbar>
+      <div class="example-sidenav-content">
+        <button mat-icon-button>
+          <mat-icon (click)="drawer.toggle()">menu</mat-icon>
+        </button>
+        <router-outlet></router-outlet>
+      </div>  
+    </mat-drawer-container>
+  </section>  
 
-<app-login></app-login>
+  <!-- <app-login *ngIf="!isLoggedIn"></app-login> -->
+</section>
