@@ -1,28 +1,31 @@
 <section>
-  <app-top-nav *ngIf="!isLoggedIn"></app-top-nav>
+  <app-top-nav *ngIf="isLoggedIn"></app-top-nav>
 
-  <section *ngIf="!isLoggedIn">
-    <mat-drawer-container class="example-container" autosize style="height: 90vh;">
-      <mat-drawer #drawer class="example-sidenav" mode="side" style="width: 15%; margin-right: 5px;">
+  <section>
+    <mat-drawer-container class="example-container" autosize [ngClass]="{'drawer': isLoggedIn === true }">
+      <mat-drawer #drawer class="example-sidenav" mode="side" style="width: 15%; margin-right: 5px;" *ngIf="isLoggedIn">
         <h1 style="margin-left: 10px;">Store List</h1>
         <span class="menu-spacer"></span>
         <div>
-          <a mat-button [routerLink]="'/dashboard'"> Dashboard </a>
+          <a mat-button [routerLink]="'/dashboard/users-list'"> Dashboard </a>
           <a mat-button [routerLink]="'/accounts'"> Accounts </a>    
         </div>
       </mat-drawer>
     
       <div class="example-sidenav-content">
-        <button mat-icon-button>
-          <mat-icon (click)="drawer.toggle()">menu</mat-icon> 
-        </button>
-        <hr>
-        <section style="margin: 5px 0px 0px 10px;">
+        <div *ngIf="isLoggedIn">
+          <button mat-icon-button>
+            <mat-icon (click)="drawer.toggle()">menu</mat-icon> 
+          </button>
+          <span>
+            Below area is the main area which will show all the information based on navbar selection. 
+          </span>
+        </div>  
+        <hr *ngIf="isLoggedIn">
+        <div [ngClass]="{'main-sec': isLoggedIn === true }">
           <router-outlet></router-outlet>
-        </section>
+        </div>
       </div>  
     </mat-drawer-container>
   </section>  
-
-  <!-- <app-login *ngIf="!isLoggedIn"></app-login> -->
 </section>

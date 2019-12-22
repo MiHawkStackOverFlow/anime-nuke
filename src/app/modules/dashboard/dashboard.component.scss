@@ -1,5 +1,10 @@
 .dash-buttons {
-    background-color: blue;
-    color: white;
+    background-color: #ccc;
+    color: black;
     margin: 5px;
+}
+
+.dash-buttons.active {    
+    background-color: green;
+    color: white;
 }

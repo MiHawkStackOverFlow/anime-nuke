@@ -1,5 +1,10 @@
 .login-main {
-    margin-top: 10%;
+    min-height: 100vh;
+    background: url('https://images2.alphacoders.com/518/thumb-1920-518982.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 mat-card {

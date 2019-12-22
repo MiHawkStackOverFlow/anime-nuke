@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
+  tabIndex = 0;
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {  }
 
+  onTabClick(index){
+      this.tabIndex = index;
+  }
 }
