@@ -9,9 +9,10 @@ const routes: Routes = [
   { 
     path: '', component: DashboardComponent,
     children : [
+      { path: '', redirectTo: 'users-list', pathMatch: 'full' },
       { path: 'users-list', component: UserListComponent },
       { path: 'games-list', component: GamesListComponent }
-    ] 
+    ],
   }
 ];
 

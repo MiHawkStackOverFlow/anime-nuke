@@ -2,7 +2,7 @@
   <app-top-nav *ngIf="currentUser"></app-top-nav>
 
   <section>
-    <mat-drawer-container class="example-container" autosize [ngClass]="{'drawer': currentUser === true }">
+    <mat-drawer-container class="example-container drawer" autosize>
       <mat-drawer #drawer class="example-sidenav" mode="side" style="width: 15%; margin-right: 5px;" *ngIf="currentUser">
         <h1 style="margin-left: 10px;">Store List</h1>
         <span class="menu-spacer"></span>
