@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatDrawer } from '@angular/material';
 import { Router } from '@angular/router';
 
@@ -10,26 +10,28 @@ import { User } from './core/models/user';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'anime-nuke';
   @ViewChild('drawer', {static: false }) sidenavDrawer: MatDrawer;
   currentUser: User;
 
-  constructor(public auth: AuthService, private router: Router) {
-    this.auth.currentUser$.subscribe(x => this.currentUser = x);
-  }
+  constructor(public auth: AuthService, private router: Router) {  }
   
   ngOnInit() {
-    // this.currentUser = this.auth.currentUserValue;
-    // console.log("test user", this.currentUser); 
+    this.auth.currentUser$.subscribe((x) => { 
+      this.currentUser = x;
+      if(this.currentUser) {
+        setTimeout(() => {
+          this.toggleSideNav();
+        }, 100);
+      }
+    });
   }
 
   toggleSideNav() {
-    this.sidenavDrawer.toggle();
-  }
-
-  ngOnViewInit() {
-    this.toggleSideNav();
+    if(this.sidenavDrawer) {
+      this.sidenavDrawer.toggle();
+    }
   }
 
 }
