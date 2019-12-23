@@ -1,9 +1,9 @@
 <section>
-  <app-top-nav *ngIf="isLoggedIn"></app-top-nav>
+  <app-top-nav *ngIf="currentUser"></app-top-nav>
 
   <section>
-    <mat-drawer-container class="example-container" autosize [ngClass]="{'drawer': isLoggedIn === true }">
-      <mat-drawer #drawer class="example-sidenav" mode="side" style="width: 15%; margin-right: 5px;" *ngIf="isLoggedIn">
+    <mat-drawer-container class="example-container" autosize [ngClass]="{'drawer': currentUser === true }">
+      <mat-drawer #drawer class="example-sidenav" mode="side" style="width: 15%; margin-right: 5px;" *ngIf="currentUser">
         <h1 style="margin-left: 10px;">Store List</h1>
         <span class="menu-spacer"></span>
         <div>
@@ -13,16 +13,16 @@
       </mat-drawer>
     
       <div class="example-sidenav-content">
-        <div *ngIf="isLoggedIn">
+        <div *ngIf="currentUser">
           <button mat-icon-button>
-            <mat-icon (click)="drawer.toggle()">menu</mat-icon> 
+            <mat-icon (click)="toggleSideNav()">menu</mat-icon> 
           </button>
           <span>
             Below area is the main area which will show all the information based on navbar selection. 
           </span>
         </div>  
-        <hr *ngIf="isLoggedIn">
-        <div [ngClass]="{'main-sec': isLoggedIn === true }">
+        <hr *ngIf="currentUser">
+        <div [ngClass]="{'main-sec': currentUser === true }">
           <router-outlet></router-outlet>
         </div>
       </div>  
