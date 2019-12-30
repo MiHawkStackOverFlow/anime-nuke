@@ -1,9 +1,9 @@
 <section>
-  <app-top-nav *ngIf="currentUser"></app-top-nav>
+  <app-top-nav *ngIf="currentUser && !notFoundPage"></app-top-nav>
 
   <section>
     <mat-drawer-container class="example-container drawer" autosize>
-      <mat-drawer #drawer class="example-sidenav" mode="side" style="width: 15%; margin-right: 5px;" *ngIf="currentUser">
+      <mat-drawer #drawer class="example-sidenav" mode="side" style="width: 15%; margin-right: 5px;" *ngIf="currentUser && !notFoundPage">
         <h1 style="margin-left: 10px;">Store List</h1>
         <span class="menu-spacer"></span>
         <div>
@@ -13,7 +13,7 @@
       </mat-drawer>
     
       <div class="example-sidenav-content">
-        <div *ngIf="currentUser">
+        <div *ngIf="currentUser && !notFoundPage">
           <button mat-icon-button>
             <mat-icon (click)="toggleSideNav()">menu</mat-icon> 
           </button>
@@ -21,8 +21,8 @@
             Below area is the main area which will show all the information based on navbar selection. 
           </span>
         </div>  
-        <hr *ngIf="currentUser">
-        <div [ngClass]="{'main-sec': currentUser }">
+        <hr *ngIf="currentUser && !notFoundPage">
+        <div [ngClass]="{'main-sec': currentUser && !notFoundPage }">
           <router-outlet></router-outlet>
         </div>
       </div>  
