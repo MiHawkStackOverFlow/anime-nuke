@@ -22,7 +22,7 @@
           </span>
         </div>  
         <hr *ngIf="currentUser">
-        <div [ngClass]="{'main-sec': currentUser === true }">
+        <div [ngClass]="{'main-sec': currentUser }">
           <router-outlet></router-outlet>
         </div>
       </div>  

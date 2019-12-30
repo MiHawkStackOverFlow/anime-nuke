@@ -3,7 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AuthService } from './../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
+import  { EncrdecrService } from '../../services/encrypt-decrypt/encrdecr.service';
 import { User } from './../../models/user';
 
 @Component({
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private encrDecr: EncrdecrService) {
        // redirect to home if already logged in
        if (this.auth.currentUserValue) { 
         this.router.navigate(['/']);
@@ -53,7 +55,9 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.auth.login(this.f.username.value, this.f.password.value)
+    let encryptPassword = this.encrDecr.set(this.f.username.value, this.f.password.value);
+    console.log("Encrypted password", encryptPassword);    
+    this.auth.login(this.f.username.value, encryptPassword)
         .pipe(first())
         .subscribe(
             data => {

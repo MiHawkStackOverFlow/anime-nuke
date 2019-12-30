@@ -3,15 +3,19 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
+import  { EncrdecrService } from './../services/encrypt-decrypt/encrdecr.service';
 import { User } from './../models/user';
 
 const users: User[] = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
+    constructor(private encrDecr: EncrdecrService) {  }
+
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const { url, method, headers, body } = request;
-
+        const decryptedPassword = this.encrDecr.get(body.username, body.password);
+        console.log("decrypted password at fake backend", decryptedPassword);
         // wrap in delayed observable to simulate server api call
         return of(null)
             .pipe(mergeMap(handleRoute))
@@ -19,6 +23,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             .pipe(delay(500))
             .pipe(dematerialize());
 
+        // route functions    
         function handleRoute() {
             switch (true) {
                 case url.endsWith('/users/authenticate') && method === 'POST':
@@ -31,11 +36,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }    
         }
 
-        // route functions
-
         function authenticate() {
             const { username, password } = body;
-            const user = users.find(x => x.username === username && x.password === password);
+            const user = users.find(x => x.username === username && x.password === decryptedPassword);
             if (!user) return error('Username or password is incorrect');
             return ok({
                 id: user.id,
@@ -75,5 +78,6 @@ export let fakeBackendProvider = {
     // use fake backend in place of Http service for backend-less development
     provide: HTTP_INTERCEPTORS,
     useClass: FakeBackendInterceptor,
-    multi: true
+    multi: true,
+    deps: [ EncrdecrService ]
 };

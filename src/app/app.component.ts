@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatDrawer } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { AuthService } from './core/services/auth.service';
+import { AuthService } from './core/services/auth/auth.service';
 import { User } from './core/models/user';
 
 @Component({
@@ -12,7 +12,7 @@ import { User } from './core/models/user';
 })
 export class AppComponent implements OnInit {
   title = 'anime-nuke';
-  @ViewChild('drawer', {static: false }) sidenavDrawer: MatDrawer;
+  @ViewChild('drawer', { static: false }) sidenavDrawer: MatDrawer;
   currentUser: User;
 
   constructor(public auth: AuthService, private router: Router) {  }
