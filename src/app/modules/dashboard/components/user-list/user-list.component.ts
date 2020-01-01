@@ -27,10 +27,6 @@ export class UserListComponent implements OnInit {
   ngOnInit() {
     this.populateUsers();
   }
-  
-  edit(user: User) {
-    this.editUser = user;
-  }
 
   updateTableData() {
     // Assign the data to the data source for the table to render
@@ -47,13 +43,16 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  updateUser() {
+  updateUser(user: User) {
+    this.editUser = user;
+    console.log("test edit user", user);
     if (this.editUser) {
       this.userService.updateUser(this.editUser)
         .subscribe(user => {
           // replace the user in the users list with update from server
           const ix = user ? this.users.findIndex(h => h.id === user.id) : -1;
           if (ix > -1) { this.users[ix] = user; }
+          this.updateTableData();
         });
       this.editUser = undefined;
     }
