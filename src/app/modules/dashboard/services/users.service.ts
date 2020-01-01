@@ -17,7 +17,7 @@ const httpOptions = {
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  url = 'api/users';
+  url = 'https://jsonplaceholder.typicode.com/users';
   private handleError: HandleError;
 
   constructor(private http: HttpClient,  httpErrorHandler: HttpErrorHandler) {

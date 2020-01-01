@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { User } from '../../models/user';
 import { UserService } from '../../services/users.service';
+
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-user-list',
@@ -9,14 +13,22 @@ import { UserService } from '../../services/users.service';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
-
-  users: Array<User>;
+  users: Array<User> = [];
   editUser: any; // the user currently being edited
+
+  displayedColumns: string[] = ['id', 'name', 'username', 'email'];
+  dataSource: MatTableDataSource<User>;
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.populateUsers();
+    console.log("my users", this.users);
+    
+    
   }
 
   edit(user: User) {
@@ -24,7 +36,14 @@ export class UserListComponent implements OnInit {
   }
 
   populateUsers(): void {
-    this.userService.getUsers().subscribe(users => this.users = users);
+    this.userService.getUsers().subscribe((users) =>  { 
+      this.users = users;
+      console.log("API ", users);
+      // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(this.users); 
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    });
   }
 
   updateUser() {
@@ -42,5 +61,14 @@ export class UserListComponent implements OnInit {
   delete(user: User): void {
     this.users = this.users.filter(h => h !== user);
     this.userService.deleteUser(user.id).subscribe();
+  }
+
+  /** Mat table functions below */
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

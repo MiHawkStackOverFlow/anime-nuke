@@ -14,8 +14,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const { url, method, headers, body } = request;
-        const decryptedPassword = this.encrDecr.get(body.username, body.password);
-        console.log("decrypted password at fake backend", decryptedPassword);
+        let decryptedPassword;
+        if(body) {
+            decryptedPassword = this.encrDecr.get(body.username, body.password);
+            console.log("decrypted password at fake backend", decryptedPassword);
+        }
         // wrap in delayed observable to simulate server api call
         return of(null)
             .pipe(mergeMap(handleRoute))
@@ -28,8 +31,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             switch (true) {
                 case url.endsWith('/users/authenticate') && method === 'POST':
                     return authenticate();
-                case url.endsWith('/users') && method === 'GET':
-                    return getUsers();
+                // case url.endsWith('/users') && method === 'GET':
+                //     return getUsers();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
