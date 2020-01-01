@@ -16,7 +16,7 @@ export class UserListComponent implements OnInit {
   users: Array<User> = [];
   editUser: any; // the user currently being edited
 
-  displayedColumns: string[] = ['id', 'name', 'username', 'email'];
+  displayedColumns: string[] = ['id', 'name', 'username', 'email', 'delete'];
   dataSource: MatTableDataSource<User>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -26,23 +26,24 @@ export class UserListComponent implements OnInit {
 
   ngOnInit() {
     this.populateUsers();
-    console.log("my users", this.users);
-    
-    
   }
-
+  
   edit(user: User) {
     this.editUser = user;
   }
 
-  populateUsers(): void {
-    this.userService.getUsers().subscribe((users) =>  { 
-      this.users = users;
-      console.log("API ", users);
-      // Assign the data to the data source for the table to render
+  updateTableData() {
+    // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.users); 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+  
+  populateUsers(): void {
+    this.userService.getUsers().subscribe((users) =>  { 
+      this.users = users;
+      console.log("my users", this.users);    
+      this.updateTableData();      
     });
   }
 
@@ -61,6 +62,7 @@ export class UserListComponent implements OnInit {
   delete(user: User): void {
     this.users = this.users.filter(h => h !== user);
     this.userService.deleteUser(user.id).subscribe();
+    this.updateTableData();
   }
 
   /** Mat table functions below */
