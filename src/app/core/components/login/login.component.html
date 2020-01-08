@@ -9,9 +9,11 @@
             <mat-card-content fxLayout="column">
                 <mat-form-field>
                     <input matInput placeholder="Email" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+                    <mat-error *ngIf="f.username.errors?.required">Username is required</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <input type="password" matInput placeholder="Password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                    <mat-error *ngIf="f.password.errors?.required">Password is required</mat-error>
                 </mat-form-field>
             </mat-card-content>
 

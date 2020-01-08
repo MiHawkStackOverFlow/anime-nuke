@@ -16,10 +16,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   currentUser: User;
   notFoundPage: boolean = false;
 
-  constructor(public auth: AuthService, private router: Router) { 
-
-  }
-    
+  constructor(public auth: AuthService, private router: Router) {  }
   
   ngOnInit() {
     // if user present show side navigation
