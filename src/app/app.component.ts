@@ -1,9 +1,10 @@
 import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { MatDrawer } from '@angular/material';
 
 import { AuthService } from './core/services/auth/auth.service';
 import { User } from './core/models/user';
-import { Router, NavigationEnd } from '@angular/router';
+import { Role } from './core/models/role';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +29,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         }, 100);
       }
     });    
+  }
+
+  get isAdmin() {
+    return this.currentUser && this.currentUser.role === Role.Admin;
   }
 
   ngAfterViewInit() {

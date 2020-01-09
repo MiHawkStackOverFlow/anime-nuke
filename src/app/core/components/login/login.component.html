@@ -20,6 +20,8 @@
             <mat-card-actions align="end">
                 <button class="submit-btn" mat-raised-button color="primary">Login</button>
             </mat-card-actions>
+
+            <mat-error *ngIf="error" style="text-align: center;">{{error}}</mat-error>
         </form>    
 
     </mat-card>

@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     let encryptPassword = this.encrDecr.set(this.f.username.value, this.f.password.value);
-    console.log("Encrypted password", encryptPassword);    
+    console.log("Encrypted password", encryptPassword, this.f.password.value);    
     this.auth.login(this.f.username.value, encryptPassword)
         .pipe(first())
         .subscribe(
