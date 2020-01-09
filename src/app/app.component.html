@@ -8,7 +8,7 @@
         <span class="menu-spacer"></span>
         <div>
           <a mat-button [routerLink]="'/dashboard/users-list'"> Dashboard </a>
-          <a mat-button [routerLink]="'/accounts'"> Accounts </a>    
+          <a mat-button [routerLink]="'/accounts'" *ngIf="isAdmin"> Accounts </a>    
         </div>
       </mat-drawer>
     
