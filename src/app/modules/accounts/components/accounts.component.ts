@@ -15,7 +15,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ]
 })
 export class AccountsComponent implements OnInit {
-  userDetails: any = [];
+  registeredAccounts: any = [];
+  nonRegisteredAccounts: any = [];
   dataSource = [];
   columnsToDisplay = ['accountId', 'username', 'email', 'website'];
   expandedElement: any | null;
@@ -30,12 +31,12 @@ export class AccountsComponent implements OnInit {
         let match = details.filter(detail => user.email === detail.email)[0];
         if(match) {
           let merged = { ...user, ...match };
-          this.userDetails.push(merged);
+          this.registeredAccounts.push(merged);
         }
       });
       
-      console.log("test finale", this.userDetails);
-      this.dataSource = this.userDetails;
+      console.log("test finale", this.registeredAccounts);
+      this.dataSource = this.registeredAccounts;
     });
   }
 
