@@ -6,6 +6,7 @@ import { UserService } from '../../services/users.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-user-list',
@@ -22,7 +23,7 @@ export class UserListComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
     this.populateUsers();
@@ -33,9 +34,11 @@ export class UserListComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.users); 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.spinnerService.hide();
   }
   
   populateUsers(): void {
+    this.spinnerService.show();
     this.userService.getUsers().subscribe((users) =>  { 
       this.users = users;
       console.log("my users", this.users);    

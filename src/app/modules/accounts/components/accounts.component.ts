@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../services/account/account.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-accounts',
@@ -21,9 +22,10 @@ export class AccountsComponent implements OnInit {
   dataSource = [];
   columnsToDisplay = ['accountId', 'username', 'email', 'website'];
   expandedElement: any | null;
-  constructor(public accountService: AccountService,  private router: Router) { }
+  constructor(public accountService: AccountService,  private router: Router, private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+    this.spinnerService.show();
     this.accountService.getAccountDetails().subscribe(response => {
       let users = response[0];
       let details = response[1];
@@ -43,7 +45,7 @@ export class AccountsComponent implements OnInit {
       
       console.log("test finale", this.registeredAccounts);
       this.dataSource = this.registeredAccounts;
-      
+      this.spinnerService.hide(); 
     });
   }
 
