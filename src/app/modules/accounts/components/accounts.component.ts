@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../services/account/account.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accounts',
@@ -20,7 +21,7 @@ export class AccountsComponent implements OnInit {
   dataSource = [];
   columnsToDisplay = ['accountId', 'username', 'email', 'website'];
   expandedElement: any | null;
-  constructor(public accountService: AccountService) { }
+  constructor(public accountService: AccountService,  private router: Router) { }
 
   ngOnInit() {
     this.accountService.getAccountDetails().subscribe(response => {
@@ -44,6 +45,10 @@ export class AccountsComponent implements OnInit {
       this.dataSource = this.registeredAccounts;
       
     });
+  }
+
+  goToUserDetails(): void {
+    this.router.navigate(['/accounts/details']);
   }
 
 }

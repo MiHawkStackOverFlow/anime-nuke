@@ -10,7 +10,8 @@
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
       <div class="example-element-detail"
-           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+           (click)="goToUserDetails();">
         <div class="example-element-diagram">
           <div class="example-element-position"> User Id : {{element.id}} </div>
           <div class="example-element-symbol"> {{element.username}} </div>
