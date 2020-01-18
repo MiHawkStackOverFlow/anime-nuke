@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { SharedModule } from '../../shared/shared.module';
 import { AppMaterialModule } from '../../app-material/app-material.module';
 import { AccountsRoutingModule } from './accounts-routing.module';
 import { AccountsComponent } from './components/accounts.component';
@@ -12,7 +13,8 @@ import { AccountDetailsComponent } from './components/account-details/account-de
   imports: [
     CommonModule,
     AppMaterialModule,
-    AccountsRoutingModule
+    AccountsRoutingModule,
+    SharedModule
   ]
 })
 export class AccountsModule { }

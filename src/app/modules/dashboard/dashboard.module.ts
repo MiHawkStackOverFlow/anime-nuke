@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { SharedModule } from '../../shared/shared.module';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { AppMaterialModule } from './../../app-material/app-material.module';
 import { DashboardComponent } from './dashboard.component';
@@ -12,7 +13,8 @@ import { GamesListComponent } from './components/games-list/games-list.component
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    AppMaterialModule
+    AppMaterialModule,
+    SharedModule
   ]
 })
 export class DashboardModule { }
