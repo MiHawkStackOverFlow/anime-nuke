@@ -4,6 +4,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
+import { AsyncSubject } from 'rxjs';
+ 
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
@@ -25,6 +27,16 @@ export class AccountsComponent implements OnInit {
   constructor(public accountService: AccountService,  private router: Router, private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+    
+    // AsynSubject example
+    const sub = new AsyncSubject();
+    sub.subscribe(console.log);
+    sub.next(123); //nothing logged
+    sub.subscribe(console.log);
+    sub.next(456); //nothing logged
+    sub.complete(); //456, 456 logged by both subscribers
+
+
     this.spinnerService.show();
     this.accountService.getAccountDetails().subscribe(response => {
       let users = response[0];
