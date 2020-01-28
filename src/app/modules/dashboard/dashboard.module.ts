@@ -6,10 +6,9 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { AppMaterialModule } from './../../app-material/app-material.module';
 import { DashboardComponent } from './dashboard.component';
 import { UserListComponent } from './components/user-list/user-list.component';
-import { GamesListComponent } from './components/games-list/games-list.component';
 
 @NgModule({
-  declarations: [DashboardComponent, UserListComponent, GamesListComponent],
+  declarations: [DashboardComponent, UserListComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

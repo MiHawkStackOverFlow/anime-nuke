@@ -7,6 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
@@ -26,6 +27,26 @@ export class UserListComponent implements OnInit {
   constructor(private userService: UserService, private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+
+    // Behavior Subject
+    const subject = new BehaviorSubject(123);
+
+    // two new subscribers will get initial value => output: 123, 123
+    subject.subscribe(console.log);
+    subject.subscribe(console.log);
+
+    // two subscribers will get new value => output: 456, 456
+    subject.next(456);
+
+    // new subscriber will get latest value (456) => output: 456
+    subject.subscribe(console.log);
+
+    // all three subscribers will get new value => output: 789, 789, 789
+    subject.next(789);
+
+    // output: 123, 123, 456, 456, 456, 789, 789, 789
+
+    // this component implementation below
     this.populateUsers();
   }
 
@@ -48,7 +69,7 @@ export class UserListComponent implements OnInit {
 
   updateUser(user: User) {
     this.editUser = user;
-    console.log("test edit user", user);
+    // console.log("test edit user", user);
     if (this.editUser) {
       this.userService.updateUser(this.editUser)
         .subscribe(user => {
