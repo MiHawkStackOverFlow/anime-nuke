@@ -1,4 +1,5 @@
 <div>
-    <a mat-button [routerLink]="'/dashboard/users-list'" class="dash-buttons" [ngClass]="{'active': tabIndex === 0}" (click)="onTabClick(0)"> Users-List </a>   
+    <a mat-button [routerLink]="'/dashboard/users-list'" class="dash-buttons" [ngClass]="{'active': tabIndex === 0}" (click)="onTabClick(0);"> Users-List </a>
+    <a mat-button [routerLink]="'/dashboard/recent-transactions'" class="dash-buttons" [ngClass]="{'active': tabIndex === 1}" (click)="onTabClick(1);"> Recent Transactions </a>   
 </div>
 <router-outlet></router-outlet>
