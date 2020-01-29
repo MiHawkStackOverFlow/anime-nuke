@@ -30,4 +30,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 1.  https://medium.com/@kevalpatel2106/what-is-reactive-programming-da37c1611382
 2.  https://codecraft.tv/courses/angular/reactive-programming-with-rxjs/streams-and-reactive-programming/
+3.  https://gist.github.com/staltz/868e7e9bc2a7b8c1f754
 
