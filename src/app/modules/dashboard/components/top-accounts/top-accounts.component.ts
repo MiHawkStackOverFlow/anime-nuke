@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, Subscriber } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, Subscriber, Subscription } from 'rxjs';
 import { topAccounts } from '../../models/data';
 
 @Component({
@@ -7,23 +7,42 @@ import { topAccounts } from '../../models/data';
   templateUrl: './top-accounts.component.html',
   styleUrls: ['./top-accounts.component.scss']
 })
-export class TopAccountsComponent implements OnInit {
-
+export class TopAccountsComponent implements OnInit, OnDestroy {
+  myTopAccountsSubscription: Subscription;
   constructor() { }
 
-  subscribe(subscriber: Subscriber<any>): void {
-    for (let account of topAccounts) {
-      subscriber.next(account);
-    }
-  }
-
   ngOnInit() {
-    let topAccountsObservable$ = new Observable(subscriber => {
+    // new Observable === Observable.create
+    let topAccountsObservable$ = Observable.create((subscriber: Subscriber<any>) => {
+
+      // error
+      if(document.title !== 'AnimeNuke') {
+        subscriber.error('Incorrect Page Title');
+      }
+
+      // next
       for (let account of topAccounts) {
         subscriber.next(account);
       }
+
+      // complete
+      setTimeout(() => {
+        subscriber.complete();
+      }, 2000);
+
+      // teardown code
+      return () => console.log("Executing teardown code");
+
     });
-    topAccountsObservable$.subscribe((account: any) => console.log("Account Name", account.name));
+    
+    // subscribe to observable
+    this.myTopAccountsSubscription = topAccountsObservable$.subscribe((account: any) => console.log("Account Name", account.name));
+  }
+
+  ngOnDestroy() {
+    if(this.myTopAccountsSubscription) {
+      this.myTopAccountsSubscription.unsubscribe();
+    }
   }
 
 }
