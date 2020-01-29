@@ -8,9 +8,10 @@ import { AppMaterialModule } from './../../app-material/app-material.module';
 import { DashboardComponent } from './dashboard.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { RecentTransactionsComponent } from './components/recent-transactions/recent-transactions.component';
+import { TopAccountsComponent } from './components/top-accounts/top-accounts.component';
 
 @NgModule({
-  declarations: [DashboardComponent, UserListComponent, RecentTransactionsComponent],
+  declarations: [DashboardComponent, UserListComponent, RecentTransactionsComponent, TopAccountsComponent],
   imports: [
     CommonModule,
     FormsModule,

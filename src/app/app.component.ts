@@ -40,7 +40,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this.notFoundPage = event.url.indexOf('404') > -1;
-        console.log("test route", event.url);
+        // console.log("test route", event.url);
       }
     });
   }

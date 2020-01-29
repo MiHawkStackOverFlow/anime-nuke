@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { RecentTransactionsComponent } from './components/recent-transactions/recent-transactions.component';
+import { TopAccountsComponent } from './components/top-accounts/top-accounts.component';
 
 const routes: Routes = [
   { 
@@ -11,7 +12,8 @@ const routes: Routes = [
     children : [
       { path: '', redirectTo: 'users-list', pathMatch: 'full' },
       { path: 'users-list', component: UserListComponent },
-      { path: 'recent-transactions', component: RecentTransactionsComponent }
+      { path: 'recent-transactions', component: RecentTransactionsComponent },
+      { path: 'top-accounts', component: TopAccountsComponent }
     ]
   }
 ];

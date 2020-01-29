@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 
 import { User } from '../../models/user';
 import { UserService } from '../../services/users.service';
@@ -7,14 +7,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
   users: Array<User> = [];
   editUser: any; // the user currently being edited
 
@@ -23,6 +23,8 @@ export class UserListComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+  getUsersSubscription: Subscription;
 
   constructor(private userService: UserService, private spinnerService: Ng4LoadingSpinnerService) { }
 
@@ -60,7 +62,7 @@ export class UserListComponent implements OnInit {
   
   populateUsers(): void {
     this.spinnerService.show();
-    this.userService.getUsers().subscribe((users) =>  { 
+    this.getUsersSubscription = this.userService.getUsers().subscribe((users) =>  {
       this.users = users;
       console.log("my users", this.users);    
       this.updateTableData();      
@@ -94,6 +96,12 @@ export class UserListComponent implements OnInit {
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+  }
+
+  ngOnDestroy() {
+    if(this.getUsersSubscription) {
+      this.getUsersSubscription.unsubscribe();
     }
   }
 }
