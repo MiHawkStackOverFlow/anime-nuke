@@ -1,5 +1,6 @@
 <div>
-    <a mat-button [routerLink]="'/dashboard/users-list'" class="dash-buttons" [ngClass]="{'active': tabIndex === 0}" (click)="onTabClick(0)"> Users-List </a>
-    <a mat-button [routerLink]="'/dashboard/games-list'" class="dash-buttons" [ngClass]="{'active': tabIndex === 1}" (click)="onTabClick(1)"> Games-List </a>    
+    <a mat-button [routerLink]="'/dashboard/users-list'" class="dash-buttons" [ngClass]="{'active': tabIndex === 0}" (click)="onTabClick(0);"> Users-List </a>
+    <a mat-button [routerLink]="'/dashboard/recent-transactions'" class="dash-buttons" [ngClass]="{'active': tabIndex === 1}" (click)="onTabClick(1);"> Recent Transactions </a>
+    <a mat-button [routerLink]="'/dashboard/top-accounts'" class="dash-buttons" [ngClass]="{'active': tabIndex === 2}" (click)="onTabClick(2);"> Top Accounts </a>      
 </div>
 <router-outlet></router-outlet>

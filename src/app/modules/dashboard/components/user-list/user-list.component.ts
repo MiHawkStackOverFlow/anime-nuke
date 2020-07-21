@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 
 import { User } from '../../models/user';
 import { UserService } from '../../services/users.service';
@@ -7,13 +7,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
   users: Array<User> = [];
   editUser: any; // the user currently being edited
 
@@ -23,9 +24,31 @@ export class UserListComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
+  getUsersSubscription: Subscription;
+
   constructor(private userService: UserService, private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+
+    // Behavior Subject
+    const subject = new BehaviorSubject(123);
+
+    // two new subscribers will get initial value => output: 123, 123
+    subject.subscribe(console.log);
+    subject.subscribe(console.log);
+
+    // two subscribers will get new value => output: 456, 456
+    subject.next(456);
+
+    // new subscriber will get latest value (456) => output: 456
+    subject.subscribe(console.log);
+
+    // all three subscribers will get new value => output: 789, 789, 789
+    subject.next(789);
+
+    // output: 123, 123, 456, 456, 456, 789, 789, 789
+
+    // this component implementation below
     this.populateUsers();
   }
 
@@ -39,7 +62,7 @@ export class UserListComponent implements OnInit {
   
   populateUsers(): void {
     this.spinnerService.show();
-    this.userService.getUsers().subscribe((users) =>  { 
+    this.getUsersSubscription = this.userService.getUsers().subscribe((users) =>  {
       this.users = users;
       console.log("my users", this.users);    
       this.updateTableData();      
@@ -48,7 +71,7 @@ export class UserListComponent implements OnInit {
 
   updateUser(user: User) {
     this.editUser = user;
-    console.log("test edit user", user);
+    // console.log("test edit user", user);
     if (this.editUser) {
       this.userService.updateUser(this.editUser)
         .subscribe(user => {
@@ -73,6 +96,12 @@ export class UserListComponent implements OnInit {
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+  }
+
+  ngOnDestroy() {
+    if(this.getUsersSubscription) {
+      this.getUsersSubscription.unsubscribe();
     }
   }
 }

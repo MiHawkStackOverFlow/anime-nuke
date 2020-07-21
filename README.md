@@ -25,3 +25,10 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Rxjs read
+
+1.  https://medium.com/@kevalpatel2106/what-is-reactive-programming-da37c1611382
+2.  https://codecraft.tv/courses/angular/reactive-programming-with-rxjs/streams-and-reactive-programming/
+3.  https://gist.github.com/staltz/868e7e9bc2a7b8c1f754
+
