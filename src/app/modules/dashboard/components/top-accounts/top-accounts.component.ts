@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Observable, Subscriber, Subscription, of, from, concat, forkJoin, combineLatest, fromEvent } from 'rxjs';
 import { topAccounts } from '../../models/data';
+import { unsubscribe } from '../../../../shared/decorators/unsubscribe-decorator';
 
 @Component({
   selector: 'app-top-accounts',
@@ -8,6 +9,7 @@ import { topAccounts } from '../../models/data';
   styleUrls: ['./top-accounts.component.scss']
 })
 export class TopAccountsComponent implements OnInit, OnDestroy {
+  @unsubscribe()
   myTopAccountsSubscription: Subscription;
   @ViewChild('myButton', { static: true }) myButton: ElementRef;
   constructor() { }
@@ -28,11 +30,11 @@ export class TopAccountsComponent implements OnInit, OnDestroy {
         subscriber.complete();
       }, 2000);
       // teardown code
-      return () => console.log("Executing teardown code");
+      return () => console.log();
     });
     
     // subscribe to observable
-    this.myTopAccountsSubscription = topAccountsObservable$.subscribe((account: any) => console.log("Account Name", account.name));
+    this.myTopAccountsSubscription = topAccountsObservable$.subscribe((account: any) => console.log());
   }
 
   secondaryCreation() {
@@ -58,13 +60,11 @@ export class TopAccountsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.secondaryCreation();
+    this.primaryCreation();
   }
 
   ngOnDestroy() {
-    if(this.myTopAccountsSubscription) {
-      this.myTopAccountsSubscription.unsubscribe();
-    }
+    console.log("On destroy function");
   }
 
 }
